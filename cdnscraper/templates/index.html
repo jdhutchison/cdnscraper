@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Static Resource Identifier</title>
+    <script type="text/javascript" src="{% static 'validation.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+</head>
+<body>
+    <h1>Static Resource Identifier</h1>
+    <hr />
+    <p>Please enter a domain below to identify the resources</p>
+    <form method="post" action="resources">
+        {% csrf_token %}
+        <label for="domain">Domain http://</label>
+        <input type="text" id="domain" name="domain" placeholder="your domain here (without http://)" />
+        <button value="Scan" type="submit" onclick="return validateDomain();">Scan</button>
+    </form>
+</body>
+</html>

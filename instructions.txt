@@ -1,0 +1,77 @@
+=== INSTALLATION ===
+
+1. PREREQUISITES
+
+To run te scraper the following things need to be installed:
+* Python 2 (2.6 or later)
+* Django 1.7+
+* Beautiful Soup 4
+* dnspython
+* Requests
+
+Python is best installed using apt (i.e. sudo apt-get install python) while the
+other tools can be installed using apt or the python utility pip. If using pip then
+you can run the following commands:
+pip install django==1.7
+pip install beautifulsoup
+pip install requests
+pip install dnspython
+
+2. DEPLOYMENT
+
+Simply unzip the provided Zip file anywhere on your filesystem to be able to run the application.
+
+/opt is often a good choice but it can be deployed anywhere - the scraper does not write anything
+to disk or require any permissions (other than being readable/executable for whatever handles
+incoming requests).
+
+3. TAKING REQUESTS
+
+Django has a simple development server built in which can be used to send HTTP requests to the
+application. However, for production use Django should be provided requests via WSGI using a
+WSGI implementing tool/server. uwsgi is one of the better choices for this and a guide on how
+to set up uwgsi to handle requests and pass them to Django can be found at:
+
+http://uwsgi-docs.readthedocs.org/en/latest/tutorials/Django_and_nginx.html
+
+uwsgi can be set up to take requests over a TCP port or a unix socket, and thus can be proxied
+behind a HTTP server such as Apache or Nginx. Alternately uswgi can be called directly from javascript
+running on Node.js via a TCP port or Unix socket.
+
+=== RUNNING ===
+
+1. CONFIGURATION
+
+The Django application settings in settings.py have been set up for running for production. However,
+if you need to make changes for optimisation, etc, you can read the Django manual for the settings file:
+
+https://docs.djangoproject.com/en/1.7/topics/settings/
+
+The scraper itself has two settings that can be configured. The first controls the maximum number of
+running threads allowed to process a domain. The second controlls how optimisitc or thorough the scraper
+should be in classifying content types of URLs. There is basic documentation for these settings in the
+file they are configured in:
+
+cdnscraper/scraper/settings.py
+
+2. STARTING SERVER
+
+If using the built in Django web server for testing/integration, in a terminal go to the directory
+the zip file was unzipped into and issue the command:
+
+python manage.py runserver
+
+This will launch a server listening on port 8000.
+
+3. RUNNING THE APPLICATION
+
+If Django's test server is being used all URLs in this section should have localhost:8000 prefixed
+to them.
+
+To view the HTML interface to the scraper go to /, which will allow you to enter a domain for testing
+purposes via a browser.
+
+You can bypass this by sending a GET or POST request to /resources (for HTML output) or /resources/json
+(for JSON output) with a single parameter - 'domain' - containing the domain to be spidered. The JSON
+output will contain a map of three items, the domain, the resources found in that domain (as a list of
+strings) and if a serious error happens an error message with some details as to what went wrong.

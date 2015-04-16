@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resources for domain</title>
+    <script type="text/javascript" src="{% static 'validation.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+</head>
+<body>
+    <h1>Static Resource Identifier :: Resources for {{ domain }}</h1>
+    <hr />
+    {% if error %}
+        <div class="error">
+            <h2>Error getting resources for {{ domain }}</h2>
+            <p>Unable to complete resoure identification for the domain.</p>
+            <p><b>Reason: </b>{{ error }}</p>
+        </div>
+    {% elif resources %}
+        <p>Here are the static resources for {{ domain }}</p>
+        <table>
+            <tbody>
+                {% for resource in resources %}
+                    <tr><td>{{ resource }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

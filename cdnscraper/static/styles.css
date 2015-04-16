@@ -1,0 +1,8 @@
+h1, h2, h3, h4, h5, h6  { width: 100% text-align: center; }
+form                    { width: 60%; margin: auto 0; }
+table                   { width: 50%; margin: auto 0; border: black 1px solid; }
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)		{ background-color:#fff; }
+td                      { }
+input                   { width: 80%; }
+.error                  { color: #ee0000; }
